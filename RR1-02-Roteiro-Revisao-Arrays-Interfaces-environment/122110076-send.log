@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-07-28T11:12:08.657-0300</date>
+  <logger>DIEGO SOUTO MAIOR ALEIXO</logger>
+  <level>FINE</level>
+  <message>File 122110076-DIEGO SOUTO MAIOR ALEIXO.zip was received. It was sent by DIEGO SOUTO MAIOR ALEIXO from IP 150.165.42.139 at 28-07-2023 11*12*08</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-07-28T11:29:37.021-0300</date>
+  <logger>DIEGO SOUTO MAIOR ALEIXO</logger>
+  <level>FINE</level>
+  <message>File 122110076-DIEGO SOUTO MAIOR ALEIXO.zip was received. It was sent by DIEGO SOUTO MAIOR ALEIXO from IP 150.165.42.139 at 28-07-2023 11*29*36</message>
+</record>
