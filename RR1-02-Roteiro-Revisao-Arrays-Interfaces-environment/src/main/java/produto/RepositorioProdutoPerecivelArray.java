@@ -1,5 +1,7 @@
 package produto;
 
+import java.util.ArrayList;
+
 /**
  * Classe que representa um repositório de produtos usando arrays como estrutura
  * sobrejacente. Alguns métodos (atualizar, remover e procurar) ou executam com
@@ -19,7 +21,7 @@ public class RepositorioProdutoPerecivelArray {
 	/**
 	 * A estrutura (array) onde os produtos sao mantidos.
 	 */
-	private ProdutoPerecivel[] produtos;
+	private ArrayList<ProdutoPerecivel> produtos;
 
 	/**
 	 * A posicao do ultimo elemento inserido no array de produtos. o valor
@@ -29,7 +31,7 @@ public class RepositorioProdutoPerecivelArray {
 
 	public RepositorioProdutoPerecivelArray(int size) {
 		super();
-		this.produtos = new ProdutoPerecivel[size];
+		this.produtos = new ArrayList<ProdutoPerecivel>();
 	}
 
 	/**
@@ -42,8 +44,7 @@ public class RepositorioProdutoPerecivelArray {
 	 * @return
 	 */
 	private int procurarIndice(int codigo) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		return this.produtos.indexOf(new ProdutoPerecivel(codigo, null, 0, null, null));
 	}
 
 	/**
@@ -53,16 +54,19 @@ public class RepositorioProdutoPerecivelArray {
 	 * @return
 	 */
 	public boolean existe(int codigo) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (this.procurarIndice(codigo) == -1) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	/**
 	 * Insere um novo produto (sem se preocupar com duplicatas)
 	 */
 	public void inserir(ProdutoPerecivel produto) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		index++;
+		this.produtos.add(this.index, produto);
 	}
 
 	/**
@@ -71,8 +75,12 @@ public class RepositorioProdutoPerecivelArray {
 	 * utilizado.
 	 */
 	public void atualizar(ProdutoPerecivel produto) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (!this.produtos.contains(produto)) {
+			throw new RuntimeException("Produto inexistente");		
+		} 
+
+		int chossenIndex = this.produtos.indexOf(produto);
+		this.produtos.add(chossenIndex, produto);
 	}
 
 	/**
@@ -83,8 +91,11 @@ public class RepositorioProdutoPerecivelArray {
 	 * @param codigo
 	 */
 	public void remover(int codigo) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (this.existe(codigo)) {
+			this.produtos.remove(new ProdutoPerecivel(codigo, null, 0, null, null));
+		} else {
+			throw new RuntimeException("Produto inexistente");	
+		}
 	}
 
 	/**
@@ -95,7 +106,13 @@ public class RepositorioProdutoPerecivelArray {
 	 * @return
 	 */
 	public ProdutoPerecivel procurar(int codigo) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		ProdutoPerecivel p = new ProdutoPerecivel(codigo, "produto", 0, "descrição", null);
+
+		for (ProdutoPerecivel produto : this.produtos) {
+			if (p.equals(produto)) {
+				p = produto;
+			}
+		}
+		return p;
 	}
 }

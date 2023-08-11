@@ -58,5 +58,8 @@ public class Main {
                 System.err.println("Forma inválida detectada.");
                 break;
         }
+
+         sc.close();
     }
+
 }
