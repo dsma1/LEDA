@@ -12,14 +12,16 @@ public class SelectionSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		for (int i = leftIndex; i < rightIndex + 1; i++) {
-			int min = i;
-			for (int j = (i + 1); j < rightIndex + 1; j++) {
-				if (array[j].compareTo(array[min]) < 0) {
-					min = j;
+		if (!(array == null || leftIndex < 0 || rightIndex < leftIndex || rightIndex < 0 || rightIndex > array.length)) {
+			for (int i = leftIndex; i < rightIndex + 1; i++) {
+				int min = i;
+				for (int j = (i + 1); j < rightIndex + 1; j++) {
+					if (array[j].compareTo(array[min]) < 0) {
+						min = j;
+					}
 				}
+				Util.swap(array, i, min);
 			}
-			Util.swap(array, i, min);
 		}
 	}
 }
