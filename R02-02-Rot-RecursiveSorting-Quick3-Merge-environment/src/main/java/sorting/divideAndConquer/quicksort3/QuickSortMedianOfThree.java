@@ -21,13 +21,36 @@ public class QuickSortMedianOfThree<T extends Comparable<T>> extends
 
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 		if (!(array == null || leftIndex < 0 || rightIndex > array.length || leftIndex >= rightIndex)) {
-			int pivot = partition(array, leftIndex, rightIndex);
+			middleIndex = (leftIndex + rightIndex) / 2;
+
+			if (array[middleIndex].compareTo(array[leftIndex]) < 0) {
+					Util.swap(array, middleIndex, leftIndex);
+				}
+			if (array[rightIndex].compareTo(array[middleIndex]) < 0) {
+					Util.swap(array, middleIndex, rightIndex);
+				}
+
+			int pivot = partition(array, leftIndex, middleIndex, rightIndex);
 			sort(array, leftIndex, pivot - 1);
 			sort(array, pivot + 1, rightIndex);
 		}
 	}
 
-	private int partition(T[] array, int leftIndex, int rightIndex) {
+	private int partition(T[] array, int leftIndex, int middleIndex, int rightIndex) {
+		T pivot = array[middleIndex];
+		Util.swap(array, middleIndex, rightIndex - 1);
+		int i = leftIndex;
 
+		for (int j = leftIndex + 1; j < rightIndex; j++) {
+			if (array[j].compareTo(pivot) <= 0) {
+				i++;
+				Util.swap(array, i, j);
+	
+			}
+		}
+
+		Util.swap(array, leftIndex, i);
+		return i;
 	}
+
 }
