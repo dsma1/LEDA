@@ -1,6 +1,7 @@
 package sorting.divideAndConquer.quicksort3;
 
 import sorting.AbstractSorting;
+import util.Util;
 
 /**
  * A classe QuickSortMedianOfThree representa uma variação do QuickSort que
@@ -21,36 +22,39 @@ public class QuickSortMedianOfThree<T extends Comparable<T>> extends
 
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 		if (!(array == null || leftIndex < 0 || rightIndex > array.length || leftIndex >= rightIndex)) {
-			middleIndex = (leftIndex + rightIndex) / 2;
-
-			if (array[middleIndex].compareTo(array[leftIndex]) < 0) {
-					Util.swap(array, middleIndex, leftIndex);
-				}
-			if (array[rightIndex].compareTo(array[middleIndex]) < 0) {
-					Util.swap(array, middleIndex, rightIndex);
-				}
-
-			int pivot = partition(array, leftIndex, middleIndex, rightIndex);
+			int pivot = partition(array, leftIndex, rightIndex);
 			sort(array, leftIndex, pivot - 1);
 			sort(array, pivot + 1, rightIndex);
 		}
 	}
 
-	private int partition(T[] array, int leftIndex, int middleIndex, int rightIndex) {
-		T pivot = array[middleIndex];
-		Util.swap(array, middleIndex, rightIndex - 1);
-		int i = leftIndex;
+	private int partition(T[] array, int leftIndex, int rightIndex) {
 
-		for (int j = leftIndex + 1; j < rightIndex; j++) {
+		int middleIndex = (leftIndex + rightIndex) / 2;
+
+		if (array[middleIndex].compareTo(array[leftIndex]) < 0) {
+			Util.swap(array, middleIndex, leftIndex);
+		}
+		if (array[rightIndex].compareTo(array[middleIndex]) < 0) {
+			Util.swap(array, middleIndex, rightIndex);
+		}
+		if (array[rightIndex].compareTo(array[leftIndex]) < 0) {
+			Util.swap(array, leftIndex, rightIndex);
+		}
+
+		Util.swap(array, middleIndex, rightIndex - 1);
+
+		T pivot = array[rightIndex - 1];
+		int i = leftIndex - 1;
+
+		for (int j = leftIndex; j < rightIndex - 1; j++) {
 			if (array[j].compareTo(pivot) <= 0) {
 				i++;
 				Util.swap(array, i, j);
-	
 			}
 		}
 
-		Util.swap(array, leftIndex, i);
-		return i;
+		Util.swap(array, rightIndex - 1, i + 1);
+		return i + 1;
 	}
-
 }

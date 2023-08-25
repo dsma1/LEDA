@@ -1,6 +1,9 @@
 package sorting.divideAndConquer.hybridMergesort;
 
+import java.util.ArrayList;
+
 import sorting.AbstractSorting;
+import util.Util;
 
 /**
  * A classe HybridMergeSort representa a implementação de uma variação do
@@ -30,7 +33,83 @@ public class HybridMergeSort<T extends Comparable<T>> extends
 	protected static int INSERTIONSORT_APPLICATIONS = 0;
 
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		MERGESORT_APPLICATIONS = 0;
+		INSERTIONSORT_APPLICATIONS = 0;
+
+		if (array.length <= SIZE_LIMIT) {
+			INSERTIONSORT_APPLICATIONS++;
+			insertionSort(array, leftIndex, rightIndex);
+		} else {
+			MERGESORT_APPLICATIONS++;
+			mergeSort(array, leftIndex, rightIndex);
+		}
+	}
+
+	public void insertionSort(T[] array, int leftIndex, int rightIndex) {
+		if (!(leftIndex >= rightIndex || leftIndex < 0 || rightIndex > array.length || array == null)) {
+
+			for (int i = leftIndex; i < rightIndex + 1; i++) {
+				int j = i;
+				
+				while (j > leftIndex && array[j].compareTo(array[j - 1]) < 0) {
+					Util.swap(array, j, j - 1);
+					j -= 1;
+				}
+			}
+		}
+	}
+
+	private void mergeSort(T[] array, int leftIndex, int rightIndex) {
+		if (!(leftIndex >= rightIndex || leftIndex < 0 || rightIndex > array.length || array == null)) {
+			int middleIndex = (leftIndex + rightIndex) / 2;
+
+			sort(array, leftIndex, middleIndex);
+			sort(array, middleIndex + 1, rightIndex);
+			merge(array, leftIndex, middleIndex, rightIndex);
+		}
+	}
+
+	private void merge(T[] array, int leftIndex, int middleIndex, int rightIndex) {
+		int sizeLeftArray = (middleIndex - leftIndex) + 1;
+		int sizeRightArray = rightIndex - middleIndex;
+
+		ArrayList<T> leftArray = new ArrayList<T>();
+		ArrayList<T> rightArray = new ArrayList<T>();
+
+		for (int i = 0; i < sizeLeftArray; i++) {
+			leftArray.add(i, array[leftIndex + i]);
+		}
+
+		for (int j = 0; j < sizeRightArray; j++) {
+			rightArray.add(j, array[middleIndex + 1 + j]);
+		}
+
+		int index1 = 0;
+		int index2 = 0; 
+		int position = leftIndex;
+
+		while (index1 < sizeLeftArray && index2 < sizeRightArray) {
+			if (leftArray.get(index1).compareTo(rightArray.get(index2)) <= 0) {
+				array[position] = leftArray.get(index1);
+				index1++;
+			} else {
+				array[position] = rightArray.get(index2);
+				index2++;
+			}
+
+			position++;
+		}
+
+		while (index1 < sizeLeftArray) {
+			array[position] = leftArray.get(index1);
+			index1++;
+			position++;
+		}
+
+		while (index2 < sizeRightArray) {
+			array[position] = rightArray.get(index2);
+			index2++;
+			position++;
+		}
 	}
 }
