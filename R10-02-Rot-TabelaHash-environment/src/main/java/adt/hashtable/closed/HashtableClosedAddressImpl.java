@@ -70,25 +70,59 @@ public class HashtableClosedAddressImpl<T> extends
 
 	@Override
 	public void insert(T element) {
-		int index = ((HashFunctionClosedAddress<T>) this.hashFunction).hash(element);
-		((LinkedList<T>) this.table[index]).add(element);
+		if (!element.equals(null)) {
+			int hash = ((HashFunctionClosedAddress<T>) this.hashFunction).hash(element);
+
+			if (this.table[hash] == null) {
+				this.table[hash] = new LinkedList<T>();
+			} else {
+				this.COLLISIONS++;
+			}
+			
+			((LinkedList<T>) this.table[hash]).addLast(element);
+			this.elements++;
+		}
 	}
 
 	@Override
 	public void remove(T element) {
-		this.table[((HashFunctionClosedAddress) this.hashFunction).hash(element)] = null;
+		if (!element.equals(null)) {
+			int hash = ((HashFunctionClosedAddress<T>) this.hashFunction).hash(element);
+
+			if (this.table[hash] != null) {
+				
+				if (((LinkedList<T>) this.table[hash]).remove(element)) {
+					this.COLLISIONS--;
+					this.elements--;
+				}
+			}
+		}
 	}
 
 	@Override
 	public T search(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		T result = null;
+
+		if (!element.equals(null)) {
+			int hash = ((HashFunctionClosedAddress<T>) this.hashFunction).hash(element);
+
+			if (this.table[hash] != null && ((LinkedList<T>) this.table[hash]).contains(element)) {
+				result = element;
+			}
+		}
+
+		return result;
 	}
 
 	@Override
 	public int indexOf(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		int index = -1;
+
+		if (search(element) != null) {
+			index = ((HashFunctionClosedAddress<T>) this.hashFunction).hash(element);
+		}
+
+		return index;
 	}
 
 }
